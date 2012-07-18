@@ -1,23 +1,17 @@
-import api.settings
-
 import pickle
 
 class Cache():
-    def __init__(self):
-        self.settings = settings = api.settings.CACHE
+    def __init__(self, backend, **config):
+        self.config = config
         
-        backend_name = settings['backend']
-        import_path = __name__.split('.')
-        import_path.append(backend_name)
-        import_path = ('.').join(import_path)
-        self.CacheModule = __import__(import_path, fromlist=[backend_name])
-        self.CacheBackend = getattr(self.CacheModule, backend_name)
-        self.backend = self.CacheBackend(**settings)
+        self.CacheModule = __import__(backend, fromlist=[backend])
+        self.CacheBackend = getattr(self.CacheModule, backend)
+        self.backend = self.CacheBackend(**config)
     
     @classmethod
     def generate_key(cls, *args):
         params = pickle.dumps(args)
-        return hash(params)
+        return hex(hash(params))
     
     def get(self, key):
         if not isinstance(key, basestring):
@@ -25,7 +19,7 @@ class Cache():
         
         return self.backend.get(key)
     
-    def set(self, key, value, expire):
+    def set(self, key, value, expire = 0):
         if not isinstance(key, basestring):
             key = self.generate_key(key)
         

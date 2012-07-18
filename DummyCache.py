@@ -6,7 +6,7 @@ class DummyCache():
         self.timeout = {}
     
     def get(self, key):
-        timeout = self.timeout.get(key, None)
+        timeout = self.timeout.get(key, 0)
         if timeout == 0 or timeout > time():
             return self.cache[key]
         
@@ -17,6 +17,6 @@ class DummyCache():
         return None
     
     def set(self, key, value, expire):
-        self.timeout[key] = 0 if expire == 0 else str(time() + expire)
+        self.timeout[key] = 0 if expire == 0 else (time() + expire)
         self.cache[key] = value
         return True
