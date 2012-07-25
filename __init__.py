@@ -7,7 +7,10 @@ class Cache():
         self.config = config
         
         if isinstance(backend, basestring):
-            cache_module = __import__(backend, fromlist=[backend])
+            name_parts = __name__.split('.')[:-1]
+            name_parts.append(backend)
+            import_path = '.'.join(name_parts)
+            cache_module = __import__(import_path, fromlist=[backend])
             self.CacheBackend = getattr(cache_module, backend)
         else:
             self.CacheBackend = backend

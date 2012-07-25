@@ -24,7 +24,7 @@ class CacheTest(unittest2.TestCase):
         cache.set(key, value, 0)
         self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
         
-        for lifespan in range(1, 11, 5):
+        for lifespan in range(1, 3):
             key = "a key"
             value = "a value"
             cache.set(key, value, lifespan)
