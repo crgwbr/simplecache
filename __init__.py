@@ -7,7 +7,9 @@ class Cache():
         self.config = config
         
         if isinstance(backend, basestring):
-            name_parts = __name__.split('.')[:-1]
+            name_parts = __name__.split('.')
+            if name_parts[-1:][0] != "simplecache":
+                name_parts = []
             name_parts.append(backend)
             import_path = '.'.join(name_parts)
             cache_module = __import__(import_path, fromlist=[backend])
@@ -20,7 +22,7 @@ class Cache():
     @classmethod
     def generate_key(klass, *args):
         params = pickle.dumps(args)
-        return hex(hash(params))
+        return hash(params)
     
     @classmethod
     def get_instance(klass, backend_name):

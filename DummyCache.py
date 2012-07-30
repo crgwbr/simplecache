@@ -8,7 +8,7 @@ class DummyCache():
     def get(self, key):
         timeout = self.timeout.get(key, 0)
         if timeout == 0 or timeout > time():
-            return self.cache[key]
+            return self.cache.get(key)
         
         if self.timeout.has_key(key):
             del self.timeout[key]
