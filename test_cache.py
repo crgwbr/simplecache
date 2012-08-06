@@ -22,17 +22,14 @@ class CacheTest(unittest2.TestCase):
         key = [1, 2, 3]
         value = "hello!"
         cache.set(key, value, 0)
-        self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
+        self.assertIsNone(cache.get(key), "Key should be expired")
         
         for lifespan in range(1, 3):
             key = "a key"
             value = "a value"
             cache.set(key, value, lifespan)
-            self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
-            time.sleep(lifespan / 2.0)
-            self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
-            time.sleep(lifespan / 2.0)
             self.assertIsNone(cache.get(key), "Key should be expired")
+            time.sleep(lifespan)
     
     def test_generate_key(self):
         a = Cache.generate_key(1, 2, 3)
@@ -62,6 +59,24 @@ class CacheTest(unittest2.TestCase):
         self.assertNotEqual(a, b, "Cache keys should not be equal")
         self.assertNotEqual(a, c, "Cache keys should not be equal")
         self.assertNotEqual(b, c, "Cache keys should not be equal")
+    
+    def test_memory_cache(self):
+        cache = Cache("MemoryCache")
+        
+        key = [1, 2, 3]
+        value = "hello!"
+        cache.set(key, value, 0)
+        self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
+        
+        for lifespan in range(1, 3):
+            key = "a key"
+            value = "a value"
+            cache.set(key, value, lifespan)
+            self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
+            time.sleep(lifespan / 2.0)
+            self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
+            time.sleep(lifespan / 2.0)
+            self.assertIsNone(cache.get(key), "Key should be expired")
     
     def test_singletons(self):
         a = Cache.get_instance('DummyCache')

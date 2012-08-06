@@ -8,8 +8,8 @@ class Cache():
         
         if isinstance(backend, basestring):
             name_parts = __name__.split('.')
-            if name_parts[-1:][0] != "simplecache":
-                name_parts = []
+            if name_parts[-1:][0] == "__init__":
+                name_parts = name_parts[:-1]
             name_parts.append(backend)
             import_path = '.'.join(name_parts)
             cache_module = __import__(import_path, fromlist=[backend])
