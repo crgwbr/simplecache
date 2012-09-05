@@ -1,12 +1,20 @@
 # SimpleCache
 
-SimpleCache is a simple Python cache wrapper designed for performance web applications. It's very lightweight and supports multiple caching backends like Memcache, DummyCache (a fake, in-memory cache designed for development), and FileCache.
+SimpleCache is a simple Python cache wrapper designed for performance web 
+applications. It's very lightweight and supports multiple caching backends 
+like Memcache, DummyCache (a fake, in-memory cache designed for 
+development), and FileCache.
 
-SimpleCache is in *active* development and is still very alpha. This isn't recommended for anyone who doesn't feel like debugging an infinite black hole of bugs.
+SimpleCache is in *active* development and is still very alpha. This isn't 
+recommended for anyone who doesn't feel like debugging an infinite black 
+hole of bugs.
 
 ## Usage
 
-The Cache class (the main interface of SimpleCache) is not technically a singleton since it fully supports multiple instances. While you may wish to create multiple instances sometimes, for most cases you'll only want a single instance to be created.
+The Cache class (the main interface of SimpleCache) is not technically a 
+singleton since it fully supports multiple instances. While you may wish 
+to create multiple instances sometimes, for most cases you'll only want 
+a single instance to be created.
 
 Here's a simple example of how you can instantiate an use SimpleCache:
 

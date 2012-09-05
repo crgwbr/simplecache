@@ -7,14 +7,34 @@ class CacheTest(unittest2.TestCase):
     
     def test_backend_loader(self):
         cache1 = Cache("DummyCache")
-        self.assertTrue(isinstance(cache1, Cache), "Cache did not instantiate properly")
-        self.assertEqual(cache1.CacheBackend, DummyCache, "Cache backend was not imported correctly")
-        self.assertTrue(isinstance(cache1.backend, DummyCache), "Cache Backend did not instantiate properly")
+        
+        self.assertTrue(
+            isinstance(cache1, Cache),
+            "Cache did not instantiate properly")
+        
+        self.assertEqual(
+            cache1.CacheBackend, 
+            DummyCache, 
+            "Cache backend was not imported correctly")
+        
+        self.assertTrue(
+            isinstance(cache1.backend, DummyCache), 
+            "Cache Backend did not instantiate properly")
         
         cache2 = Cache(DummyCache)
-        self.assertTrue(isinstance(cache2, Cache), "Cache did not instantiate properly")
-        self.assertEqual(cache2.CacheBackend, DummyCache, "Cache backend was not imported correctly")
-        self.assertTrue(isinstance(cache2.backend, DummyCache), "Cache Backend did not instantiate properly")
+        
+        self.assertTrue(
+            isinstance(cache2, Cache), 
+            "Cache did not instantiate properly")
+        
+        self.assertEqual(
+            cache2.CacheBackend, 
+            DummyCache, 
+            "Cache backend was not imported correctly")
+        
+        self.assertTrue(
+            isinstance(cache2.backend, DummyCache),
+            "Cache Backend did not instantiate properly")
         
     def test_dummy_cache(self):
         cache = Cache("DummyCache")
@@ -66,15 +86,24 @@ class CacheTest(unittest2.TestCase):
         key = [1, 2, 3]
         value = "hello!"
         cache.set(key, value, 0)
-        self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
+        self.assertEqual(
+            cache.get(key), 
+            value, 
+            "Set value is not equal to returned value")
         
         for lifespan in range(1, 3):
             key = "a key"
             value = "a value"
             cache.set(key, value, lifespan)
-            self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
+            self.assertEqual(
+                cache.get(key),
+                value, 
+                "Set value is not equal to returned value")
             time.sleep(lifespan / 2.0)
-            self.assertEqual(cache.get(key), value, "Set value is not equal to returned value")
+            self.assertEqual(
+                cache.get(key),
+                value, 
+                "Set value is not equal to returned value")
             time.sleep(lifespan / 2.0)
             self.assertIsNone(cache.get(key), "Key should be expired")
     
@@ -87,7 +116,10 @@ class CacheTest(unittest2.TestCase):
         a = Cache('DummyCache')
         b = Cache('DummyCache')
         self.assertNotEqual(a, b, "Multiple instances were not created")
-        self.assertNotEqual(hash(a), hash(b), "Multiple instances were not created")
+        self.assertNotEqual(
+            hash(a), 
+            hash(b), 
+            "Multiple instances were not created")
         
         
 if __name__ == "__main__":
